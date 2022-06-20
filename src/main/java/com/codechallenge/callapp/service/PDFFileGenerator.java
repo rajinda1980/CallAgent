@@ -20,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,9 +56,9 @@ public class PDFFileGenerator implements FileGenerator {
         PdfRendererBuilder builder = new PdfRendererBuilder();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] result;
-        String path = callLogTemplateFilePath;
+        File file = new File(callLogTemplateFilePath);
 
-        try (InputStream inputStream = Files.newInputStream(Path.of(path));
+        try (InputStream inputStream = new FileInputStream(file);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             String content = reader.lines().collect(Collectors.joining(System.lineSeparator()));
             Template template = new Template("Call_details", content, configuration);
@@ -113,9 +111,9 @@ public class PDFFileGenerator implements FileGenerator {
         PdfRendererBuilder builder = new PdfRendererBuilder();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] result;
-        String path = configTemplateFilePath;
+        File file = new File(configTemplateFilePath);
 
-        try (InputStream inputStream = Files.newInputStream(Path.of(path));
+        try (InputStream inputStream = new FileInputStream(file);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))){
             String content = reader.lines().collect(Collectors.joining(System.lineSeparator()));
             Template template = new Template("Call_details", content, configuration);
