@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <h3> Call Details - To Date </h3>
+    <h3> Configuration Details </h3>
 
     <table class="call_tbl">
         <thead>
