@@ -5,8 +5,6 @@ import com.codechallenge.callapp.dto.TransferLocations;
 import com.codechallenge.callapp.dto.TransferType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -19,6 +17,9 @@ public class AppConfig {
 
     private Map<String, List<Location>> locationMap = null;
     private List<String> transferTypeNames;
+
+    @Value("${config.file.location}")
+    private String configFileLocation;
 
     @Value("${agent.transfer_type.names}")
     private String[] transferTypeNames_props;
@@ -39,8 +40,7 @@ public class AppConfig {
 
     private Map<String, List<Location>> loadLocationMap() throws Exception {
         try {
-            Resource resource = new ClassPathResource("locations.xml");
-            File file = resource.getFile();
+            File file = new File(configFileLocation);
             JAXBContext jaxbContext = JAXBContext.newInstance(TransferLocations.class);
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
