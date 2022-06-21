@@ -5,7 +5,6 @@ import com.codechallenge.callapp.dto.Response;
 import com.codechallenge.callapp.dto.TransferTypeRequest;
 import com.codechallenge.callapp.service.CallManager;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,31 +34,27 @@ public class TransferTypeController {
                 Response response = callManager.getLocationAndTelephoneNo(request);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid transfer type");
 
         } catch (Exception e) {
             log.error("Call cannot be accepted. Error : {}", ExceptionUtils.getStackTrace(e));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error occurred while processing the request");
         }
     }
 
     @GetMapping(value = "update_config/{location_name}")
     public ResponseEntity<Object> updateConfiguration(@PathVariable String location_name) {
         try {
-            if (StringUtils.isEmpty(location_name.strip())) {
-                return new ResponseEntity<>("Please provide location name", HttpStatus.NOT_ACCEPTABLE);
-            }
-
             boolean result = callManager.updateConfig(location_name);
             if (result) {
-                return new ResponseEntity<>("Location name is successfully updated", HttpStatus.OK);
+                return ResponseEntity.status(HttpStatus.OK).body("Location name is successfully updated");
             } else {
-                return new ResponseEntity<>("Location name does not exist", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid location name");
             }
 
         } catch (Exception e) {
             log.error("Location name cannot be updated. Error : {}", ExceptionUtils.getStackTrace(e));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error occurred while processing the request");
         }
     }
 
@@ -75,7 +70,7 @@ public class TransferTypeController {
 
         } catch (Exception e) {
             log.error("Cannot generate file. Error : {}", ExceptionUtils.getStackTrace(e));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error occurred while processing the request");
         }
     }
 
@@ -91,7 +86,7 @@ public class TransferTypeController {
 
         } catch (Exception e) {
             log.error("Cannot generate file. Error : {}", ExceptionUtils.getStackTrace(e));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error occurred while processing the request");
         }
     }
 }
