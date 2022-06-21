@@ -4,7 +4,6 @@ Steps to run the application
 
 1. Download the application (Command - git clone https://github.com/rajinda1980/CallAgent.git)
 2. Set the following configurations in the application.properties file
-    - Configure the data source (h2 is currently configured)
     - Change the template.src.path (This is where all FTL templates should be stored)
     - Configure the template file path used to generate call logs (Property - calllog.template.file.path)
     - Configure the template file path to generate all configurations ( Property - config.template.file.path)
