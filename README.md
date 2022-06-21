@@ -9,7 +9,7 @@ Steps to run the application
     - Configure the template file path to generate all configurations ( Property - config.template.file.path)
 3. Build project using maven command (Command - mvn clean install) Ex : /CallAgent$ mvn clean install
 4. Copy the target/callapp-0.0.1-SNAPSHOT.jar file whereever you want the application to run
-5. Go to the copy location and un the application (Ex : /CallAgent/target$ java -jar callapp-0.0.1-SNAPSHOT.jar)
+5. Go to the copy location and run the application (Ex : /CallAgent/target$ java -jar callapp-0.0.1-SNAPSHOT.jar)
 
 
 To access the database
